@@ -1,0 +1,81 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package supermarket.model;
+
+/**
+ *
+ * @author miccarurb
+ */
+public class Product {
+    String serial;
+    String name;
+    int ivaTaxPercent;
+    float basePrice;
+    Provider provider;
+    String origin;
+
+    public Product(String serial, String name) {
+        this.serial = serial;
+        this.name = name;
+    }
+
+    public Product(String serial, String name, int ivaTaxPercent, float basePrice, Provider provider) {
+        this.serial = serial;
+        this.name = name;
+        this.ivaTaxPercent = ivaTaxPercent;
+        this.basePrice = basePrice;
+        this.provider = provider;
+    }
+
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getIvaTaxPercent() {
+        return ivaTaxPercent;
+    }
+
+    public void setIvaTaxPercent(int ivaTaxPercent) {
+        this.ivaTaxPercent = ivaTaxPercent;
+    }
+
+    public float getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(float basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+}
