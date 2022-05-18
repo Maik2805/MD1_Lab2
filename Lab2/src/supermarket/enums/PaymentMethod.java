@@ -15,7 +15,7 @@ public enum PaymentMethod {
     DEBITCARD("Tarjeta Débito", 17, 0.17f),
     CREDITCARD("Tarjeta Crédito", 10, 0.10f),
     CREDIT("Crédito", 0, 0.0f);
-    
+
     private final String name;
     private final int discountPercent;
     private final float discount;
@@ -37,7 +37,12 @@ public enum PaymentMethod {
     public float getDiscount() {
         return discount;
     }
-    
+
+    /**
+     * Por medio del nombre obtenemos cual es el tipo de pago
+     * @param name
+     * @return PaymentMethod
+     */
     public static PaymentMethod getByName(String name) {
         try {
             return PaymentMethod.valueOf(name);

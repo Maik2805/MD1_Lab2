@@ -13,10 +13,10 @@ public enum Origin {
 
     LOCAL("LOCAL", "Producto nacional"),
     IMPORTED("IMPORTED", "Producto Importado");
-    
+
     private final String name;
     private final String description;
-    
+
     Origin(final String name, final String description) {
         this.name = name;
         this.description = description;
@@ -29,8 +29,14 @@ public enum Origin {
     public String getDescription() {
         return description;
     }
-    
-    public static Origin getByName(String name) {
+
+
+    /**
+     * Por medio del nombre sabremos si el producto es importado o local
+     * @param name
+     * @return Origin
+     */
+    public static Origin getOriginByName(String name) {
         try {
             return Origin.valueOf(name);
         } catch (Exception ex) {

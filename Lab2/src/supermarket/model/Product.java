@@ -6,16 +6,19 @@
 package supermarket.model;
 
 /**
- *
- * @author miccarurb
+ * Laboratorio: #2 - Profesor: LUIS YOVANY ROMO PORTILLA
+ * Esta clase contiene toda la informacion necesaria para poder definir como estaran compuestos nuestros productos
+ * @author Michael Stevens Cardenas Urbano | Cod.202123935
+ * @author Steven Cardona Betancur | Cod.202126463
  */
+
 public class Product {
-    String serial;
-    String name;
-    int ivaTaxPercent;
-    float basePrice;
-    Provider provider;
-    String origin;
+    private String serial;
+    private String name;
+    private int ivaTaxPercent;
+    private float basePrice;
+    private Provider provider;
+    private String origin;
 
     public Product(String serial, String name) {
         this.serial = serial;
@@ -29,7 +32,6 @@ public class Product {
         this.basePrice = basePrice;
         this.provider = provider;
     }
-
 
     public String getSerial() {
         return serial;

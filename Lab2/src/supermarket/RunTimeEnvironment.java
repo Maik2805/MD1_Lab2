@@ -16,8 +16,10 @@ import supermarket.model.Product;
 import supermarket.model.Provider;
 
 /**
- *
- * @author miccarurb
+ * Laboratorio: #2 - Profesor: LUIS YOVANY ROMO PORTILLA
+ * Es nuestra clase principal que se encarga de toda la ejecucion del programa
+ * @author Michael Stevens Cardenas Urbano | Cod.202123935
+ * @author Steven Cardona Betancur | Cod.202126463
  */
 public class RunTimeEnvironment {
     ClientController clientController;
@@ -29,11 +31,11 @@ public class RunTimeEnvironment {
         productController = new ProductController();
         providerController = new ProviderController();
     }
-    
+
     public void initializeSupermarketData(){
         clientController.addClient(new Client("1006207277", "Michael","Cardenas"));
         clientController.addClient(new Client("1122334455", "Fulanito","Detal"));
-        
+
         Provider bimbo = new Provider("Bimbo","Pan");
         Provider alpina = new Provider("Alpina","Lacteos");
         Provider nestleUsa = new Provider("Alpina","Lacteos");
@@ -45,5 +47,5 @@ public class RunTimeEnvironment {
         productController.addProduct(new Product("9876", "Pan Tajado", 19, 6500, bimbo));
         productController.addProduct(productoExterno);
     }
-    
+
 }

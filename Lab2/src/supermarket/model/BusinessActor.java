@@ -8,23 +8,23 @@ package supermarket.model;
 import java.util.Date;
 
 /**
- *
- * @author miccarurb
+ * Laboratorio: #2 - Profesor: LUIS YOVANY ROMO PORTILLA
+ * De esta clase se van a heredar nuestros actores y funcionarios del negocio
+ * @author Michael Stevens Cardenas Urbano | Cod.202123935
+ * @author Steven Cardona Betancur | Cod.202126463
  */
+
 public class BusinessActor {
-    
-    String identification;
-    String contactNumber;
-    String email;
-    String address;
-    Date creationDate;
+    private String identification;
+    private String contactNumber;
+    private String email;
+    private String address;
+    private Date creationDate;
 
     public BusinessActor(String identification) {
         this.identification = identification;
         creationDate = new Date();
     }
-    
-    
 
     public String getIdentification() {
         return identification;
