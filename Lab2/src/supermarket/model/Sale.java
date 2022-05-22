@@ -1,5 +1,6 @@
 package supermarket.model;
 import java.util.ArrayList;
+import supermarket.enums.PaymentMethod;
 
 /**
  * Laboratorio: #2 - Profesor: LUIS YOVANY ROMO PORTILLA
@@ -14,13 +15,36 @@ public class Sale {
     private Client client;
     private ArrayList<Product> listProducts;
     private String paymentMethod;
+    private float totalAmount;
+    private float totalIvaAmount;
+    private float totalDiscount;
+    private float payableAmount;
+    private boolean calculated;
 
-    public Sale(Employee seller, String idSale, Client client, ArrayList<Product> listProducts, String paymentMethod) {
+    public Sale(String idSale, Employee seller, Client client, ArrayList<Product> listProducts, String paymentMethod) {
         this.seller = seller;
         this.idSale = idSale;
         this.client = client;
         this.listProducts = listProducts;
         this.paymentMethod = paymentMethod;
+        this.calculated = false;
+    }
+    
+    public boolean calculateSale(){
+        if(paymentMethod == null || paymentMethod.isEmpty())
+            return false;
+        float discountPercent = PaymentMethod.getByName(paymentMethod).getDiscount();
+        totalAmount = 0;
+        totalIvaAmount = 0;
+        for(Product product: listProducts){
+            float productIva = (float) (product.getIvaTaxPercent()) / 100;
+            totalIvaAmount += product.getBasePrice() * productIva;
+            totalAmount += product.getBasePrice() + product.getBasePrice() * productIva;
+        }
+        totalDiscount = totalAmount * discountPercent;
+        payableAmount = totalAmount - totalDiscount;
+        calculated = true;
+        return true;
     }
 
     /**
@@ -78,4 +102,26 @@ public class Sale {
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
+
+    public boolean isCalculated() {
+        return calculated;
+    }
+
+    public float getTotalAmount() {
+        return totalAmount;
+    }
+
+    public float getTotalIvaAmount() {
+        return totalIvaAmount;
+    }
+
+    public float getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public float getPayableAmount() {
+        return payableAmount;
+    }
+    
+    
 }

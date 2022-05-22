@@ -19,6 +19,7 @@ public class Product {
     private float basePrice;
     private Provider provider;
     private String origin;
+    private String originType;
 
     public Product(String serial, String name) {
         this.serial = serial;
@@ -80,4 +81,13 @@ public class Product {
     public void setOrigin(String origin) {
         this.origin = origin;
     }
+
+    public String getOriginType() {
+        return originType;
+    }
+
+    public void setOriginType(String originType) {
+        this.originType = originType;
+    }
+    
 }
