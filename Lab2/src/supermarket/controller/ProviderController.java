@@ -92,5 +92,8 @@ public class ProviderController {
         Provider providerFound = findProviderById(serial);
         return providers.removeIf(product -> product.equals(providerFound));
     }
-
+    
+    public void showMenu(){
+        
+    }
 }

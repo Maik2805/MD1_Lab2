@@ -101,4 +101,8 @@ public class ClientController {
         }
         return true;
     }
+    
+    public void showMenu(){
+        
+    }
 }

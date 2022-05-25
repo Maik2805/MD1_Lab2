@@ -22,7 +22,7 @@ public class SaleController {
 
     private final Set<Sale> salesHistory;
 
-    SaleController() {
+    public SaleController() {
         salesHistory = new HashSet();
     }
 
@@ -86,6 +86,15 @@ public class SaleController {
         } else {
             storage.put(key, value);
         }
+    }
+    
+    public void showMenu(){
+        
+    }
+    
+    public void showReport(float initialCashAmount){
+        DailySummary summary = generateDailySummary(initialCashAmount);
+        
     }
 
 }

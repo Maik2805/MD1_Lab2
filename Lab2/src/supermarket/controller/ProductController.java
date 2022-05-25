@@ -94,4 +94,8 @@ public class ProductController {
         Product productFound = findProductById(serial);
         return products.removeIf(product -> product.equals(productFound));
     }
+    
+    public void showMenu(){
+        
+    }
 }

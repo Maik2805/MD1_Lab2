@@ -12,6 +12,11 @@ public class Employee extends BusinessActor{
     private String name;
     private String lastName;
 
+    public Employee( String identification, String name) {
+        super(identification);
+        this.name = name;
+    }
+
     public Employee(String identification, String name, String lastName) {
         super(identification);
         this.name = name;

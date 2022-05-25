@@ -24,3 +24,5 @@ hs_err_pid*
 /.idea
 build/*
 manifest.mf
+/Lab2/build/
+/Lab2/dist/
