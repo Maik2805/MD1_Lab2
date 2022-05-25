@@ -50,4 +50,13 @@ public enum PaymentMethod {
             return null;
         }
     }
+    
+    public static PaymentMethod getByNameAttr(String value){
+        for (PaymentMethod pm : values()) {
+            if (pm.name.equals(value)) {
+              return pm;
+            }
+        }
+        return null;
+    }
 }

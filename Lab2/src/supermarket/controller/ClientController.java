@@ -9,11 +9,13 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import static java.util.function.Predicate.isEqual;
+import javax.swing.JOptionPane;
 import supermarket.model.Client;
 
 /**
- * Laboratorio: #2 - Profesor: LUIS YOVANY ROMO PORTILLA
- * Se encarga de manipular nuestra lista de clientes [Agregar, Eliminar, Actualizar, Obtener]
+ * Laboratorio: #2 - Profesor: LUIS YOVANY ROMO PORTILLA Se encarga de manipular
+ * nuestra lista de clientes [Agregar, Eliminar, Actualizar, Obtener]
+ *
  * @author Michael Stevens Cardenas Urbano | Cod.202123935
  * @author Steven Cardona Betancur | Cod.202126463
  */
@@ -27,6 +29,7 @@ public class ClientController {
 
     /**
      * Agrega un Cliente a nuestra lista
+     *
      * @param client
      * @return client
      */
@@ -37,6 +40,7 @@ public class ClientController {
 
     /**
      * Busca un cliente por medio de su id y lo devuelve de encontrarlo
+     *
      * @param id
      * @return Optional<Client>
      */
@@ -46,6 +50,7 @@ public class ClientController {
 
     /**
      * Busca un cliente especifico y lo devuelve de encontrarlo
+     *
      * @param client
      * @return Optional<Client>
      */
@@ -55,17 +60,20 @@ public class ClientController {
 
     /**
      * Actualizamos un cliente existente con nuevos datos
+     *
      * @param client
      * @return Client
      */
-    public Client updateClient(Client client){
+    public Client updateClient(Client client) {
         // Java funciona por referencias al objecto real, por lo que el uso de un metodo setter en cualquier otra clase
         // va a modificar el objeto en todas las variables del contexto que lo referencien.
         return client;
     }
 
     /**
-     * Creamos un nuevo cliente si no existe y se actualiza si ya esta en nuestra lista
+     * Creamos un nuevo cliente si no existe y se actualiza si ya esta en
+     * nuestra lista
+     *
      * @param client
      * @return Client
      */
@@ -79,10 +87,11 @@ public class ClientController {
 
     /**
      * Eliminamos un cliente especifico
+     *
      * @param client
      * @return boolean
      */
-    public boolean removeClient(Client client){
+    public boolean removeClient(Client client) {
         if (clients.contains(client)) {
             clients.remove(client);
         }
@@ -91,18 +100,42 @@ public class ClientController {
 
     /**
      * Eliminamos un cliente por medio de su id
+     *
      * @param id
      * @return boolean
      */
-    public boolean removeClientById(String id){
+    public boolean removeClientById(String id) {
         Optional<Client> clientFound = findClientById(id);
         if (clientFound.isPresent()) {
             removeClient(clientFound.get());
         }
         return true;
     }
-    
-    public void showMenu(){
-        
+
+    public Client selectClient() {
+        String menu = "Digite el numero de identificación";
+        for (Client client : clients) {
+            menu += client.getIdentification() + " - " + client.getName() + client.getLastName() + "\n";
+        }
+        menu += "00 - Para crear Cliente.\n";
+        menu += "0 - Para crear Volver.\n";
+
+        while (true) {
+            String result = JOptionPane.showInputDialog(menu);
+            Optional<Client> client = Optional.empty();
+            switch (result) {
+                case "00":
+                    //crear cliente
+                    break;
+                case "0":
+                    return null;
+                default:
+                    client = findClientById(result);
+                    break;
+            }
+            if(client.isPresent()){
+                return client.get();
+            }
+        }
     }
 }

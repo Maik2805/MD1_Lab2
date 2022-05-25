@@ -5,12 +5,14 @@
  */
 package supermarket.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
+import javax.swing.JOptionPane;
 
-import supermarket.model.Client;
 import supermarket.model.Product;
 
 /**
@@ -41,8 +43,8 @@ public class ProductController {
      * @param serial
      * @return Optional<Product>
      */
-    public Product findProductById(String serial) {
-        return (Product) products.stream().filter(product -> product.getSerial().equals(serial));
+    public Optional<Product> findProductById(String serial) {
+        return products.stream().filter(product -> product.getSerial().equals(serial)).findAny();
     }
 
     /**
@@ -69,9 +71,9 @@ public class ProductController {
      * @return Product
      */
     public Product createProduct(Product product){
-        Product productFound = findProductById(product.getSerial());
-        if (productFound != null) {
-            return updateClient(productFound);
+        Optional<Product> productFound = findProductById(product.getSerial());
+        if (productFound.isPresent()) {
+            return updateClient(productFound.get());
         }
         return addProduct(product);
     }
@@ -91,11 +93,46 @@ public class ProductController {
      * @return boolean
      */
     public boolean removeProductById(String serial){
-        Product productFound = findProductById(serial);
+        Product productFound = findProductById(serial).orElse(null);
         return products.removeIf(product -> product.equals(productFound));
     }
     
-    public void showMenu(){
-        
+    public Product selectProduct() {
+        String menu = "Ingrese el serial del producto.";
+        for (Product product : products) {
+            menu += product.getSerial() + " - " + product.getName() + " - $" + product.getBasePrice() + " - " + product.getOriginType() + "\n";
+        }
+        menu += "00 - Para crear Producto.\n";
+        menu += "0 - Para crear Volver.\n";
+
+        while (true) {
+            String result = JOptionPane.showInputDialog(menu);
+            Optional<Product> product = Optional.empty();
+            switch (result) {
+                case "00":
+                    //crear cliente
+                    break;
+                case "0":
+                    return null;
+                default:
+                    product = findProductById(result);
+                    break;
+            }
+            if(product.isPresent()){
+                return product.get();
+            }
+        }
     }
+    public void showProducts(Collection<Product> listProducts) {
+        String menu = "Productos.";
+        for (Product product : listProducts) {
+            menu += product.getSerial() + " - " + product.getName() + " - $" + product.getBasePrice() + " - " + product.getOriginType() + "\n";
+        }
+        JOptionPane.showMessageDialog(null, menu);
+    }
+    
+    public void showProducts(){
+        showProducts(products);
+    }
+    
 }

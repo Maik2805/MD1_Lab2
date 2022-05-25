@@ -31,6 +31,7 @@ public class Main {
         } while (!isValid);
         Employee employee = new Employee( employeeId, employeeName);
         RunTimeEnvironment runTime = new RunTimeEnvironment(employee, initialAmount);
+        runTime.initializeSupermarketData();
         runTime.showInitialMenu();
         
     }

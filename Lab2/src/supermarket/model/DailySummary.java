@@ -58,6 +58,4 @@ public class DailySummary {
         this.cashRequired = cashRequired;
     }
     
-    
-    
 }

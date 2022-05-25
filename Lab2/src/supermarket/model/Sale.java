@@ -1,15 +1,18 @@
 package supermarket.model;
+
 import java.util.ArrayList;
 import supermarket.enums.PaymentMethod;
 
 /**
- * Laboratorio: #2 - Profesor: LUIS YOVANY ROMO PORTILLA
- * Esta clase contiene toda la informacion necesaria para poder identificar nuestras ventas y todos sus responsables
+ * Laboratorio: #2 - Profesor: LUIS YOVANY ROMO PORTILLA Esta clase contiene
+ * toda la informacion necesaria para poder identificar nuestras ventas y todos
+ * sus responsables
+ *
  * @author Michael Stevens Cardenas Urbano | Cod.202123935
  * @author Steven Cardona Betancur | Cod.202126463
  */
-
 public class Sale {
+
     private Employee seller;
     private String idSale;
     private Client client;
@@ -21,6 +24,22 @@ public class Sale {
     private float payableAmount;
     private boolean calculated;
 
+    public Sale() {
+        listProducts = new ArrayList<>();
+    }
+
+    public void addProduct(Product product) {
+        listProducts.add(product);
+    }
+
+    public boolean removeProduct(Product product) {
+        return listProducts.remove(product);
+    }
+
+    public boolean removeProductById(String serial) {
+        return listProducts.removeIf(product -> product.getSerial().equals(serial));
+    }
+
     public Sale(String idSale, Employee seller, Client client, ArrayList<Product> listProducts, String paymentMethod) {
         this.seller = seller;
         this.idSale = idSale;
@@ -29,14 +48,15 @@ public class Sale {
         this.paymentMethod = paymentMethod;
         this.calculated = false;
     }
-    
-    public boolean calculateSale(){
-        if(paymentMethod == null || paymentMethod.isEmpty())
+
+    public boolean calculateSale() {
+        if (paymentMethod == null || paymentMethod.isEmpty()) {
             return false;
+        }
         float discountPercent = PaymentMethod.getByName(paymentMethod).getDiscount();
         totalAmount = 0;
         totalIvaAmount = 0;
-        for(Product product: listProducts){
+        for (Product product : listProducts) {
             float productIva = (float) (product.getIvaTaxPercent()) / 100;
             totalIvaAmount += product.getBasePrice() * productIva;
             totalAmount += product.getBasePrice() + product.getBasePrice() * productIva;
@@ -48,7 +68,9 @@ public class Sale {
     }
 
     /**
-     * va a simular una factura la cual se mostrara en pantalla para nuestro cliente
+     * va a simular una factura la cual se mostrara en pantalla para nuestro
+     * cliente
+     *
      * @return String
      */
     public String printInvoice() {
@@ -56,7 +78,9 @@ public class Sale {
     }
 
     /**
-     * Se encarga de calcular cual va ser el monto total que el cliente debera pagar
+     * Se encarga de calcular cual va ser el monto total que el cliente debera
+     * pagar
+     *
      * @return float
      */
     public float calcAmount() {
@@ -122,6 +146,5 @@ public class Sale {
     public float getPayableAmount() {
         return payableAmount;
     }
-    
-    
+
 }
