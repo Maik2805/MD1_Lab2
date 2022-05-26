@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/supermarket/controller/ProductController.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>126</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/model/Sale.java</file>
+            <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/controller/SaleController.java</file>
+            <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/RunTimeEnvironment.java</file>
             <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/model/Provider.java</file>
+            <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/controller/ProviderController.java</file>
+            <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/controller/ProductController.java</file>
             <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/model/DailySummary.java</file>
             <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/model/Client.java</file>
+            <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/utils/DialogValidator.java</file>
             <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/model/Product.java</file>
-            <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/controller/SaleController.java</file>
+            <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/Main.java</file>
+            <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/enums/PaymentMethod.java</file>
             <file>file:/C:/own_develop/MD1_Lab2/Lab2/src/supermarket/controller/ClientController.java</file>
         </group>
     </open-files>

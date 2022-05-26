@@ -88,7 +88,7 @@ public class ProviderController {
      * @param serial
      * @return boolean
      */
-    public boolean removeClientById(String serial){
+    public boolean removeProviderById(String serial){
         Provider providerFound = findProviderById(serial);
         return providers.removeIf(product -> product.equals(providerFound));
     }

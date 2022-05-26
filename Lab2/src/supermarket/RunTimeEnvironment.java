@@ -20,6 +20,7 @@ import supermarket.controller.SaleController;
 import supermarket.enums.Origin;
 import supermarket.enums.PaymentMethod;
 import supermarket.model.Client;
+import supermarket.model.DailySummary;
 import supermarket.model.Employee;
 import supermarket.model.Product;
 import supermarket.model.Provider;
@@ -47,7 +48,7 @@ public class RunTimeEnvironment {
         clientController = new ClientController();
         productController = new ProductController();
         providerController = new ProviderController();
-        saleController = new SaleController();
+        saleController = new SaleController(initialAmount);
         employee = cashier;
         initialCashAmount = initialAmount;
     }
@@ -61,19 +62,27 @@ public class RunTimeEnvironment {
         Provider nestleUsa = new Provider("Alpina", "Lacteos");
         Product productoExterno = new Product("5522", "teExotico", 25, 12800, nestleUsa);
         productoExterno.setOrigin(Origin.IMPORTED.getName());
+        productoExterno.setOriginType(Origin.IMPORTED.getDescription());
+        productoExterno.setOrigin(Origin.IMPORTED.getName());
+        Product producto1 = new Product("1234", "Leche Deslactosada", 19, 4000, alpina);
+        producto1.setOriginType(Origin.LOCAL.getDescription());
+        producto1.setOrigin(Origin.LOCAL.getName());
+        Product producto2 = new Product("9876", "Pan Tajado", 19, 6500, bimbo);
+        producto2.setOriginType(Origin.LOCAL.getDescription());
+        producto2.setOrigin(Origin.LOCAL.getName());
         providerController.addProvider(bimbo);
         providerController.addProvider(alpina);
-        productController.addProduct(new Product("1234", "Leche Deslactosada", 19, 4000, alpina));
-        productController.addProduct(new Product("9876", "Pan Tajado", 19, 6500, bimbo));
+        productController.addProduct(producto1);
+        productController.addProduct(producto2);
         productController.addProduct(productoExterno);
     }
 
     public void showInitialMenu() {
         String initialMenu = "-- SUPERMARKET UNIVALLE --"
                 + "\n 1.Registrar Venta."
-                + "\n 2.Gestionar Productos"
-                + "\n 3.Gestionar Clientes"
-                + "\n 4.Gestionar Provedores"
+                + "\n 2.(soon)Gestionar Productos"
+                + "\n 3.(soon)Gestionar Clientes"
+                + "\n 4.(soon)Gestionar Provedores"
                 + "\n 5.Genersr Reporte"
                 + "\n 0.Salir";
         do {
@@ -93,7 +102,8 @@ public class RunTimeEnvironment {
 //                    providerController.showMenu();
                     break;
                 case "5":
-//                    saleController.showReport(initialCashAmount);
+                    DailySummary summary = saleController.generateDailySummary(initialCashAmount);
+                    saleController.showReport(summary);
                     break;
                 case "0":
                     return;
@@ -117,47 +127,49 @@ public class RunTimeEnvironment {
         Product product = null;
         PaymentMethod paymentMethod = null;
         do {
-            List<String> validInputs = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "0"));
+            List<String> validInputs = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "0"));
             String result = DialogValidator.inputStr(menu, validInputs);
-            switch (result) {
-                case "1":
-                    client = clientController.selectClient();
-                    if (client != null) {
-                        sale.setClient(client);
-                    }
-                    break;
-                case "2":
-                    product = productController.selectProduct();
-                    if (product != null) {
-                        sale.addProduct(product);
-                    }
-                    break;
-                case "3":
-                    product = productController.selectProduct();
-                    if (product != null) {
-                        sale.removeProduct(product);
-                    }
-                    break;
-                case "4":
-                    productController.showProducts(sale.getListProducts());
-                    break;
-                case "5":
-                    paymentMethod = SaleController.selectPaymentMethod();
-                    if (paymentMethod != null){
-                        sale.setPaymentMethod(paymentMethod.name());
-                    }
-                    break;
-                case "6": {
-                    try {
+            try {
+                switch (result) {
+                    case "1":
+                        client = clientController.selectClient();
+                        if (client != null) {
+                            sale.setClient(client);
+                        }
+                        break;
+                    case "2":
+                        product = productController.selectProduct();
+                        if (product != null) {
+                            sale.addProduct(product);
+                        }
+                        break;
+                    case "3":
+                        product = productController.selectProduct();
+                        if (product != null) {
+                            sale.removeProduct(product);
+                        }
+                        break;
+                    case "4":
+                        productController.showProducts(sale.getListProducts());
+                        break;
+                    case "5":
+                        paymentMethod = SaleController.selectPaymentMethod();
+                        if (paymentMethod != null) {
+                            sale.setPaymentMethod(paymentMethod.name());
+                        }
+                        break;
+                    case "6":
                         saleController.createSale(sale);
-                    } catch (Exception ex) {
-                        Logger.getLogger(RunTimeEnvironment.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                        saleController.showSale(sale);
+                        break;
+                    case "7":
+                        saleController.saveSale(sale);
+                        saleController.showSale(sale);
+                    case "0":
+                        return;
                 }
-                break;
-
-                case "0":
-                    return;
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ocurrió un Error!", JOptionPane.ERROR_MESSAGE);
             }
 
         } while (true);

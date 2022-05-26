@@ -6,6 +6,7 @@
 package supermarket.utils;
 
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +23,14 @@ public class DialogValidator {
         } while (!valid);
         
         return result;
+    }
+    
+    public static void addUpOrInsertToMap(Map<String, Float> storage, String key, float value) {
+        if (storage.containsKey(key)) {
+            storage.put(key, storage.get(key) + value);
+        } else {
+            storage.put(key, value);
+        }
     }
     
 }

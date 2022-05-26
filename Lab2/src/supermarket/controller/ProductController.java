@@ -98,7 +98,7 @@ public class ProductController {
     }
     
     public Product selectProduct() {
-        String menu = "Ingrese el serial del producto.";
+        String menu = "Ingrese el serial del producto: \n";
         for (Product product : products) {
             menu += product.getSerial() + " - " + product.getName() + " - $" + product.getBasePrice() + " - " + product.getOriginType() + "\n";
         }
@@ -124,7 +124,7 @@ public class ProductController {
         }
     }
     public void showProducts(Collection<Product> listProducts) {
-        String menu = "Productos.";
+        String menu = "Productos.\n";
         for (Product product : listProducts) {
             menu += product.getSerial() + " - " + product.getName() + " - $" + product.getBasePrice() + " - " + product.getOriginType() + "\n";
         }

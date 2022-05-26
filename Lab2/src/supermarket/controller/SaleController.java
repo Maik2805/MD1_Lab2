@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JOptionPane;
+import supermarket.enums.Origin;
 import supermarket.enums.PaymentMethod;
 import supermarket.model.DailySummary;
 import supermarket.model.Employee;
@@ -27,9 +28,10 @@ import supermarket.utils.DialogValidator;
 public class SaleController {
 
     private final Set<Sale> salesHistory;
-
-    public SaleController() {
+    float cashAmount;
+    public SaleController(float initialCashAmount) {
         salesHistory = new HashSet();
+        cashAmount = initialCashAmount;
     }
 
     public Sale createSale(Sale sale) throws Exception {
@@ -40,6 +42,9 @@ public class SaleController {
     public void saveSale(Sale sale) throws Exception {
         if (!sale.isCalculated()) {
             createSale(sale);
+        }
+        if (sale.getPaymentMethod().equals(PaymentMethod.CASH.name())) {
+            cashAmount += sale.getPayableAmount();
         }
         salesHistory.add(sale);
     }
@@ -57,9 +62,9 @@ public class SaleController {
         float finalCashAmount = initialCashAmount;
         for (Sale sale : salesHistory) {
             //calc Total Amount
-            totalAmount += sale.getTotalAmount();
+            totalAmount += sale.getPayableAmount();
             //Calc Total Amount By Payment Method
-            addUpOrInsertToMap(totalByPaymentMethod, sale.getPaymentMethod(), sale.getPayableAmount());
+            DialogValidator.addUpOrInsertToMap(totalByPaymentMethod, sale.getPaymentMethod(), sale.getPayableAmount());
             //Get best Sale;
             if (bestSale == null) {
                 bestSale = sale;
@@ -68,30 +73,22 @@ public class SaleController {
                     bestSale = sale;
                 }
             }
-            //get final Cash Amount
-            if (sale.getPaymentMethod().equals(PaymentMethod.CASH.getName())) {
-                finalCashAmount += sale.getPayableAmount();
-            }
+            //get final Cash Amount -- old
+//            if (sale.getPaymentMethod().equals(PaymentMethod.CASH.getName())) {
+//                finalCashAmount += sale.getPayableAmount();
+//            }
             for (Product product : sale.getListProducts()) {
                 //Calc Total By Iva Type
                 float productValuePaid = product.getBasePrice() - (product.getBasePrice() * PaymentMethod.getByName(sale.getPaymentMethod()).getDiscount());
-                addUpOrInsertToMap(totalByIvaType, product.getOriginType(), productValuePaid);
+                DialogValidator.addUpOrInsertToMap(totalByIvaType, product.getOriginType(), productValuePaid);
             }
         }
         summary.setBestSale(bestSale);
         summary.setTotalAmount(totalAmount);
         summary.setTotalByIvaType(totalByIvaType);
         summary.setTotalByPaymentMethod(totalByPaymentMethod);
-        summary.setCashRequired(finalCashAmount);
+        summary.setCashRequired(cashAmount);
         return summary;
-    }
-
-    private void addUpOrInsertToMap(Map<String, Float> storage, String key, float value) {
-        if (storage.containsKey(key)) {
-            storage.put(key, storage.get(key) + value);
-        } else {
-            storage.put(key, value);
-        }
     }
 
     public static PaymentMethod selectPaymentMethod() {
@@ -114,6 +111,41 @@ public class SaleController {
             }
         }
 
+    }
+    
+    public void showSale(Sale sale){
+        String message = "Resumen de la venta:\n"
+                + "\nId: " + sale.getIdSale()
+                + "\nCliente: " + sale.getClient().getIdentification() + " - " + sale.getClient().getName() + " " + sale.getClient().getLastName()
+                + "\nCajero: " + sale.getSeller().getIdentification()+ " - " + sale.getSeller().getName() + " " + sale.getSeller().getLastName()
+                + "\nMetodo de pago: " + PaymentMethod.getByName(sale.getPaymentMethod()).getName()
+                + "\nCantidad de productos: " + sale.getListProducts().size()
+                + "\nValor Total (IVA Inc): " + sale.getTotalAmount()
+                + "\nValor IVA: " + sale.getTotalIvaAmount()
+                + "\nValor Descuento: " + sale.getTotalDiscount()
+                + "\nValor A Pagar: " + sale.getPayableAmount()
+                ;
+        JOptionPane.showMessageDialog(null, message);
+    }
+    
+    public void showReport(DailySummary summary){
+        String totalByIva = "\nTotal por tipo de iva: ";
+        String totalByPM = "\nTotal por medio de pago: ";
+        for (Map.Entry<String, Float> entry : summary.getTotalByIvaType().entrySet()) {
+            totalByIva += "\n  --" + entry.getKey() + "= $" + entry.getValue();            
+        }
+        for (Map.Entry<String, Float> entry : summary.getTotalByPaymentMethod().entrySet()) {
+            totalByPM += "\n  --" + PaymentMethod.getByName(entry.getKey()).getName() + "= $" + entry.getValue();            
+        }
+        String message = "Resumen de ventas:\n"
+                + "\nDinero en caja: " + summary.getCashRequired()
+                + "\nTotal en ventas: " + summary.getTotalAmount()
+                + "\nMejor Venta: $" + summary.getBestSale().getPayableAmount() + " hecha por "
+                + "\n    (" + summary.getBestSale().getClient().getIdentification()  + ") " + summary.getBestSale().getClient().getName()
+                + totalByIva
+                + totalByPM
+                ;
+        JOptionPane.showMessageDialog(null, message);
     }
 
 }

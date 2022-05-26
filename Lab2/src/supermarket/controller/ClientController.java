@@ -113,7 +113,7 @@ public class ClientController {
     }
 
     public Client selectClient() {
-        String menu = "Digite el numero de identificación";
+        String menu = "Digite el numero de identificación: \n";
         for (Client client : clients) {
             menu += client.getIdentification() + " - " + client.getName() + client.getLastName() + "\n";
         }
